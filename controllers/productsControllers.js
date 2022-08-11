@@ -25,4 +25,14 @@ const getByProductsById = async (req, res) => {
   }
 };
 
-module.exports = { getByProducts, getByProductsById };
+const createProduct = async (req, res) => {
+  const { name } = req.body;
+  try {
+    const newProduct = await productsServices.createProduct(name);
+    return res.status(201).json(newProduct);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Algo de errado não está certo' });
+  }
+};
+module.exports = { getByProducts, getByProductsById, createProduct };
