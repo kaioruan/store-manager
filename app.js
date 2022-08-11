@@ -6,6 +6,7 @@ app.use(express.json());
 
 app.get('/products', productsController.getByProducts);
 app.get('/products/:id', productsController.getByProductsById);
+app.post('/products', productsController.createProduct);
 
 // não remova esse endpoint, é para o avaliador funcionar
 app.get('/', (_request, response) => {
