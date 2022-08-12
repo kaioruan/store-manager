@@ -17,7 +17,6 @@ const getBySalesById = async (req, res) => {
   try {
     const { id } = req.params;
     const product = await salesServices.getBySalesById(id);
-    console.log(product);
     if (!product[0]) {
       return res.status(404).json({ message: 'Sale not found' });
     }
@@ -27,18 +26,45 @@ const getBySalesById = async (req, res) => {
     return res.status(500).json({ message: 'Algo de errado não está certo' });
   }
 };
+const validateSearch = (search) => { 
+  for (let i = 0; i < search.length; i += 1) {
+    if (search[i].length === 0 || search[i] === undefined) {
+      return false;
+    }
+  }
+  return true;
+};
 
 const createSale = async (req, res) => {
   const sale = req.body;
+  // const valid = true;
+  // const search = [];
   try {
+    // await sale.forEach(async (productSearch) => {
+    // search.push(await salesServices.getByProductsById(
+    //   productSearch.productId,
+    // ));
+    // }); [[]]
+    const search = await Promise.all(sale.map((e) =>
+      salesServices.getByProductsById(e.productId)));
+    const validate = validateSearch(search);
+    if (!validate) return res.status(404).json({ message: 'Product not found' });
     const newProduct = await salesServices.createSale(sale);
     if (!newProduct) {
-        return res.status(404).json({ message: 'Sale not found' });
+        return res.status(404).json({ message: 'Product not found' });
     }
     return res.status(201).json(newProduct);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(500).json({ message: 'Algo de errado não está certo' });
   }
 };
+
+  //   if ([] in product) {
+  //   return res.status(404).json({ message: 'Product not found' });
+  // }
+    // const product = await salesServices.getBySalesById(sale[0].productId);
+    //   if (!product[0]) {
+    //     return res.status(404).json({ message: 'Product not found' });
+    //   }
 module.exports = { getBySales, getBySalesById, createSale };
