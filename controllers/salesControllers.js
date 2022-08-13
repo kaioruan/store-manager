@@ -37,14 +37,7 @@ const validateSearch = (search) => {
 
 const createSale = async (req, res) => {
   const sale = req.body;
-  // const valid = true;
-  // const search = [];
   try {
-    // await sale.forEach(async (productSearch) => {
-    // search.push(await salesServices.getByProductsById(
-    //   productSearch.productId,
-    // ));
-    // }); [[]]
     const search = await Promise.all(sale.map((e) =>
       salesServices.getByProductsById(e.productId)));
     const validate = validateSearch(search);
@@ -55,16 +48,9 @@ const createSale = async (req, res) => {
     }
     return res.status(201).json(newProduct);
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     return res.status(500).json({ message: 'Algo de errado não está certo' });
   }
 };
 
-  //   if ([] in product) {
-  //   return res.status(404).json({ message: 'Product not found' });
-  // }
-    // const product = await salesServices.getBySalesById(sale[0].productId);
-    //   if (!product[0]) {
-    //     return res.status(404).json({ message: 'Product not found' });
-    //   }
 module.exports = { getBySales, getBySalesById, createSale };
