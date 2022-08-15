@@ -3,6 +3,9 @@ const productsServices = require('../services/productsServices');
 const getByProducts = async (_req, res, _next) => {
   try {
     const products = await productsServices.getByProducts();
+    if (!products) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
     return res.status(200).json(products);
   } catch (error) {
     console.log(error);

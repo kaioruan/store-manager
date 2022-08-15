@@ -38,7 +38,6 @@ const createproductSale = async (sales, insertId) => {
         item.quantity,
       ]));
   const result = { id: insertId, itemsSold: sales };
-  console.log(result);
     return result;
 };
 
