@@ -31,9 +31,20 @@ const editProduct = (id, name) => {
   return { id, name };
 };
 
+const deleteProduct = (id) => {
+  connection.execute(
+    `
+    DELETE FROM StoreManager.products
+  WHERE id = ?;`,
+    [id],
+  );
+  return { id };
+};
+
 module.exports = {
   getByProducts,
   getByProductsById,
   createProduct,
   editProduct,
+  deleteProduct,
 };
