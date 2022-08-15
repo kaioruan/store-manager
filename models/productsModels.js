@@ -20,4 +20,20 @@ const createProduct = async (name) => {
   return { id: newProduct.insertId, name };
 };
 
-module.exports = { getByProducts, getByProductsById, createProduct };
+const editProduct = (id, name) => {
+  connection.execute(
+    `
+    UPDATE StoreManager.products 
+    SET name = ?
+    WHERE id = ?;`,
+    [name, id],
+  );
+  return { id, name };
+};
+
+module.exports = {
+  getByProducts,
+  getByProductsById,
+  createProduct,
+  editProduct,
+};
