@@ -62,18 +62,20 @@ describe("Busca todos os produtos no BD - SaleController", () => {
     });
   });
   describe("Buscando um ID específico", () => {
-    // before(function () {
-    //   response.status = sinon.stub().returns(response);
-    //   response.json = sinon.stub().returns();
-    //   sinon.stub(salesServices, "getBySales").resolves();
-    // });
-    // after(function () {
-    //   salesServices.getBySales.restore();
-    // });
-    // it("O status seja 500", async () => {
-    //   const result = await salesControllers.getBySales(request, response);
-    //   console.log(result);
-    //   expect(response.status.calledWith(500)).to.be.equal(true);
-    // });
+    const res = {};
+    const req = { params: { id: 1 } };
+    before(function () {
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(salesServices, "getBySalesById").resolves(productTest);
+    });
+    after(function () {
+      salesServices.getBySalesById.restore();
+    });
+    it("O status seja 200 ao encontrar", async () => {
+      const result = await salesControllers.getBySalesById(req, res);
+      console.log(result);
+      expect(res.status.calledWith(200)).to.be.equal(true);
+    });
   });
 });
