@@ -10,8 +10,11 @@ const {
 const app = express();
 app.use(express.json());
 
+const PRODUCTS_ID = '/products/:id';
+
 app.get('/products', productsController.getByProducts);
-app.get('/products/:id', productsController.getByProductsById);
+app.get(PRODUCTS_ID, productsController.getByProductsById);
+app.put(PRODUCTS_ID, nameValidation, productsController.editProduct);
 app.post('/products', nameValidation, productsController.createProduct);
 app.post('/sales', saleValidation, quantitySaleValitation, salesControllers.createSale);
 app.get('/sales', salesControllers.getBySales);
