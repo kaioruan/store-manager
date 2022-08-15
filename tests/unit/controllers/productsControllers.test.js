@@ -50,13 +50,28 @@ describe('Busca todos os produtos no BD - Controller', () => {
     after(function () {
       productsServices.getByProducts.restore();
     });
-  it('O status seja 200', async () => {
-  await productsController.getByProducts(request, response);
-  expect(response.status.calledWith(200)).to.be.equal(true);
-  });
-  it("Quando existem produtos cadastrados", async () => {
+    it('O status seja 200', async () => {
     await productsController.getByProducts(request, response);
-    expect(response.json.calledWith(productTest)).to.be.equal(true);
+    expect(response.status.calledWith(200)).to.be.equal(true);
+    });
+    it("Quando existem produtos cadastrados", async () => {
+      await productsController.getByProducts(request, response);
+      expect(response.json.calledWith(productTest)).to.be.equal(true);
+    });
   });
-});
+  describe("Buscando um ID específico", () => {
+    // before(function () {
+    //   response.status = sinon.stub().returns(response);
+    //   response.json = sinon.stub().returns();
+    //   sinon.stub(productsServices, "getByProducts").resolves();
+    // });
+    // after(function () {
+    //   productsServices.getByProducts.restore();
+    // });
+    // it("O status seja 500", async () => {
+    //   const result = await productsController.getByProducts(request, response);
+    //   console.log(result);
+    //   expect(response.status.calledWith(500)).to.be.equal(true);
+    // });
+  });
 });
