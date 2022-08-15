@@ -7,8 +7,13 @@ const getByProductsById = async (id) => productsModels.getByProductsById(id);
 const createProduct = async (name) => productsModels.createProduct(name);
 
 const editProduct = async (product) => {
-  // const { id } = product;
   const updateProduct = await productsModels.editProduct(product.id, product.name);
+  if (!updateProduct) return null;
+  return updateProduct;
+};
+
+const deleteProduct = async (id) => {
+  const updateProduct = await productsModels.deleteProduct(id);
   if (!updateProduct) return null;
   return updateProduct;
 };
@@ -18,4 +23,5 @@ module.exports = {
   getByProductsById,
   createProduct,
   editProduct,
+  deleteProduct,
 };
