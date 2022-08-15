@@ -37,4 +37,19 @@ const createProduct = async (req, res) => {
     return res.status(500).json({ message: 'Algo de errado não está certo' });
   }
 };
-module.exports = { getByProducts, getByProductsById, createProduct };
+
+const editProduct = async (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  try {
+    const product = await productsServices.getByProductsById(id);
+    if (!product) return res.status(404).json({ message: 'Product not found' }); 
+    const updateProduct = await productsServices.editProduct({ id, name });
+    return res.status(200).json(updateProduct);
+  } catch (error) {
+      console.log(error);
+    return res.status(500).json({ message: 'Algo de errado não está certo' });
+  }
+};
+
+module.exports = { getByProducts, getByProductsById, createProduct, editProduct };
