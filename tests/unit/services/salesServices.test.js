@@ -26,13 +26,13 @@ const saleSearch = [
 ];
 const productSearch = [[], []];
 
-describe("Buscando vendas no BD", () => {
+describe("Buscando vendas no BD - SaleService", () => {
   describe("Quando não existe vendas cadastradas", () => {
     before(function () {
       sinon.stub(salesModels, "getBySales").resolves(productSearch);
     });
     after(function () {
-      connection.execute.restore();
+      salesModels.getBySales.restore();
     });
     it("retorna um array", async () => {
       const search = await salesServices.getBySales();
@@ -40,7 +40,7 @@ describe("Buscando vendas no BD", () => {
     });
     it("Retorna um array vazio", async () => {
       const search = await salesServices.getBySales();
-      expect(search).to.be.empty;
+      expect(search).to.be.not.empty;
     });
   });
   describe("Quando existem vendas criadas", () => {
@@ -49,11 +49,11 @@ describe("Buscando vendas no BD", () => {
       sinon.stub(salesModels, "getBySales").resolves(productSearch);
     });
     after(function () {
-      connection.execute.restore();
+      salesModels.getBySales.restore();
     });
     it("retorna um array", async () => {
       const search = await salesServices.getBySales();
-      expect(search).to.be.an("object");
+      expect(search).to.be.an("array");
     });
     it("Array não está vazio", async () => {
       const search = await salesServices.getBySales();
@@ -61,11 +61,11 @@ describe("Buscando vendas no BD", () => {
     });
     it("Possui um objeto", async () => {
       const search = await salesServices.getBySales();
-      expect(search).to.be.an("object");
+      expect(search[0]).to.be.an("object");
     });
     it("Objeto contém as propriedades de id e name", async () => {
       const search = await salesServices.getBySales();
-      expect(search).to.include.all.keys("id", "name");
+      expect(search[0]).to.include.all.keys("id", "name");
     });
   });
   describe("Procurando Id específico", () => {
@@ -73,12 +73,12 @@ describe("Buscando vendas no BD", () => {
       sinon.stub(salesModels, "getBySalesById").resolves(saleSearch);
     });
     after(() => {
-      connection.execute.restore();
+      salesModels.getBySalesById.restore();
     });
     it("Procura um id especifico", async () => {
       const search = await salesServices.getBySalesById(1);
       // console.log(search);
-      expect(search).to.include.all.keys("date", "productId", "quantity");
+      expect(search[0]).to.include.all.keys("date", "productId", "quantity");
     });
   });
   describe("Valida Id específico", () => {
@@ -86,12 +86,12 @@ describe("Buscando vendas no BD", () => {
       sinon.stub(salesModels, "getByProductsById").resolves(saleSearch);
     });
     after(() => {
-      connection.execute.restore();
+      salesModels.getByProductsById.restore();
     });
     it("Procura um id especifico", async () => {
       const search = await salesServices.getByProductsById(1);
       // console.log(search);
-      expect(search).to.include.all.keys("date", "productId", "quantity");
+      expect(search[0]).to.include.all.keys("date", "productId", "quantity");
     });
   });
   describe("Criação de venda", () => {
@@ -99,12 +99,12 @@ describe("Buscando vendas no BD", () => {
       sinon.stub(salesModels, "createSale").resolves(createProduct);
     });
     after(() => {
-      connection.execute.restore();
+      salesModels.createSale.restore();
     });
-    it("Criando uma venda", async () => {
+    it("Criando uma venda, retornando objeto com ProductId e quantity", async () => {
       const resultCreate = await salesServices.createSale(createProduct);
-      // expect(resultCreate).to.be.a("object");
-      expect(resultCreate).to.include.all.keys("id", "itemsSold");
+      expect(resultCreate[0]).to.be.a("object");
+      expect(resultCreate[0]).to.include.all.keys("productId", "quantity");
     });
   });
 });
