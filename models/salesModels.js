@@ -55,17 +55,33 @@ const deleteSale = (id) => {
   connection.execute(
     `
     DELETE FROM StoreManager.sales
-    WHERE id = ?
+    WHERE id = ?;
   `,
     [id],
   );
   return { id };
 };
 
+const editSale = async (sale, id) => {
+  await sale.map((item) =>
+    connection.execute(
+      `
+      UPDATE StoreManager.sales_products
+      SET
+        quantity = ?
+      WHERE sale_id = ? AND product_id = ?
+    ;`,
+      [item.quantity, id, item.productId],
+    ));
+// }
+  console.log(sale);
+  return sale;
+};
 module.exports = {
   getBySales,
   getBySalesById,
   createSale,
   getByProductsById,
   deleteSale,
+  editSale,
 };
