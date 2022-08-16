@@ -54,15 +54,15 @@ describe("Buscando produtos no BD - ProductService", () => {
   });
   // describe("Procurando Id específico", () => {
   //   before(() => {
-  //     sinon.stub(productsModels, "getByProductsById").resolves([1]);
+  //     sinon.stub(productsModels, "getByProductsById").resolves(1);
   //   });
   //   after(() => {
   //     productsModels.getByProductsById.restore();
   //   });
-    // it("Procura um id especifico", async () => {
-    //   const search = await productsServices.getByProductsById(1);
-    //   expect(search[0]).to.include.all.keys("id", "name");
-    // });
+  //   it("Procura um id especifico", async () => {
+  //     const search = await productsServices.getByProductsById(1);
+  //     expect(search).to.include.all.keys("id", "name");
+  //   });
   // });
   describe("Criação de produto", () => {
     before(() => {

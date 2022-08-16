@@ -2,7 +2,6 @@ const { expect } = require("chai");
 const { describe } = require("mocha");
 const sinon = require("sinon");
 
-const connection = require("../../../models/connection");
 const salesModels = require("../../../models/salesModels");
 const salesServices = require("../../../services/salesServices");
 
@@ -77,7 +76,6 @@ describe("Buscando vendas no BD - SaleService", () => {
     });
     it("Procura um id especifico", async () => {
       const search = await salesServices.getBySalesById(1);
-      // console.log(search);
       expect(search[0]).to.include.all.keys("date", "productId", "quantity");
     });
   });
@@ -90,7 +88,6 @@ describe("Buscando vendas no BD - SaleService", () => {
     });
     it("Procura um id especifico", async () => {
       const search = await salesServices.getByProductsById(1);
-      // console.log(search);
       expect(search[0]).to.include.all.keys("date", "productId", "quantity");
     });
   });

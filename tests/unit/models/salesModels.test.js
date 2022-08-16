@@ -74,10 +74,10 @@ describe("Buscando vendas no BD - ModelSale", () => {
     after(() => {
       connection.execute.restore();
     });
-    // it("Procura um id especifico", async () => {
-    //   const search = await salesModels.getBySalesById(1);
-    //   expect(search).to.include.all.keys("date", "productId", "quantity");
-    // });
+    it("Procura um id especifico", async () => {
+      const search = await salesModels.getBySalesById(1);
+      expect(search).to.include.all.keys("date", "productId", "quantity");
+    });
   });
   describe("Criação de venda", () => {
     before(() => {

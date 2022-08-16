@@ -23,6 +23,7 @@ describe('Busca todos os produtos no BD - Controller', () => {
     });
     it("O status seja 404", async () => {
       const result = await productsController.getByProducts(request, response);
+      console.log(result);
       expect(response.status.calledWith(404)).to.be.equal(true);
     });
   });

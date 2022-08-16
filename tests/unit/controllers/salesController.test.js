@@ -33,12 +33,19 @@ describe("Busca todos os produtos no BD - SaleController", () => {
       response.status = sinon.stub().returns(response);
       response.json = sinon.stub().returns();
       sinon.stub(salesServices, "getBySales").rejects();
+      sinon.stub(salesServices, "getBySalesById").rejects(); 
     });
     after(function () {
       salesServices.getBySales.restore();
+      salesServices.getBySalesById.restore();
     });
     it("O status seja 500", async () => {
       const result = await salesControllers.getBySales(request, response);
+      console.log(result);
+      expect(response.status.calledWith(500)).to.be.equal(true);
+    });
+    it("O status seja 500 ao procurar um ID específico", async () => {
+      const result = await salesControllers.getBySalesById(request, response);
       console.log(result);
       expect(response.status.calledWith(500)).to.be.equal(true);
     });
