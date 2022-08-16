@@ -1,7 +1,6 @@
 const productsServices = require('../services/productsServices');
 
 const ERROR_500 = 'Algo de errado não está certo';
-
 const getByProducts = async (_req, res, _next) => {
   try {
     const products = await productsServices.getByProducts();
@@ -11,7 +10,7 @@ const getByProducts = async (_req, res, _next) => {
     return res.status(200).json(products);
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: ERROR_500 });
+    return res.status(500).json({ message: 'Algo de errado não está certo' });
   }
 };
 
@@ -19,13 +18,14 @@ const getByProductsById = async (req, res) => {
   try {
     const { id } = req.params;
     const product = await productsServices.getByProductsById(id);
+    console.log(product);
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
     return res.status(200).json(product);
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: ERROR_500 });
+    return res.status(500).json({ message: 'Algo de errado não está certo' });
   }
 };
 
@@ -45,11 +45,11 @@ const editProduct = async (req, res) => {
   const { name } = req.body;
   try {
     const product = await productsServices.getByProductsById(id);
-    if (!product) return res.status(404).json({ message: 'Product not found' }); 
+    if (!product) return res.status(404).json({ message: 'Product not found' });
     const updateProduct = await productsServices.editProduct({ id, name });
     return res.status(200).json(updateProduct);
   } catch (error) {
-      console.log(error);
+    console.log(error);
     return res.status(500).json({ message: ERROR_500 });
   }
 };

@@ -10,7 +10,7 @@ const getBySales = async (_req, res, _next) => {
     return res.status(200).json(products);
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: 'Algo de errado não está certo' });
+    return res.status(500).json({ message: ERROR_500 });
   }
 };
 
@@ -24,7 +24,7 @@ const getBySalesById = async (req, res) => {
     return res.status(200).json(product);
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: 'Algo de errado não está certo' });
+    return res.status(500).json({ message: ERROR_500 });
   }
 };
 const validateSearch = (search) => {
@@ -50,7 +50,7 @@ const createSale = async (req, res) => {
     return res.status(201).json(newProduct);
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: 'Algo de errado não está certo' });
+    return res.status(500).json({ message: ERROR_500 });
   }
 };
 
@@ -67,4 +67,31 @@ const deleteSale = async (req, res) => {
   }
 };
 
-module.exports = { getBySales, getBySalesById, createSale, deleteSale };
+const editSale = async (req, res) => {
+  const { id } = req.params;
+  const sale = req.body;
+  try {
+    const product = await salesServices.getBySalesById(id);
+    if (!product[0]) return res.status(404).json({ message: 'Sale not found' });
+    const search = await Promise.all(
+      sale.map((e) => salesServices.getByProductsById(e.productId)),
+    );
+    const validate = validateSearch(search);
+    if (!validate) {
+      return res.status(404).json({ message: 'Product not found' });
+    }
+    const updateSale = await salesServices.editSale(sale, id);
+    return res.status(200).json({ saleId: id, itemsUpdated: updateSale });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: ERROR_500 });
+  }
+};
+
+module.exports = {
+  getBySales,
+  getBySalesById,
+  createSale,
+  deleteSale,
+  editSale,
+};
