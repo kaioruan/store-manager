@@ -24,6 +24,11 @@ app.post(
 app.get('/sales', salesControllers.getBySales);
 app.get('/sales/:id', salesControllers.getBySalesById);
 app.delete('/sales/:id', salesControllers.deleteSale);
+app.put(
+  '/sales/:id',
+  saleValidation,
+  quantitySaleValitation, salesControllers.editSale,
+);
 
 // não remova esse endpoint, é para o avaliador funcionar
 app.get('/', (_request, response) => {
