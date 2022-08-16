@@ -1,5 +1,6 @@
 const salesServices = require('../services/salesServices');
 
+const ERROR_500 = 'Algo de errado não está certo';
 const getBySales = async (_req, res, _next) => {
   try {
     const products = await salesServices.getBySales();
@@ -9,7 +10,7 @@ const getBySales = async (_req, res, _next) => {
     return res.status(200).json(products);
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: 'Algo de errado não está certo' });
+    return res.status(500).json({ message: ERROR_500 });
   }
 };
 
@@ -23,7 +24,7 @@ const getBySalesById = async (req, res) => {
     return res.status(200).json(product);
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: 'Algo de errado não está certo' });
+    return res.status(500).json({ message: ERROR_500 });
   }
 };
 const validateSearch = (search) => { 
@@ -49,8 +50,21 @@ const createSale = async (req, res) => {
     return res.status(201).json(newProduct);
   } catch (error) {
     console.log(error);
-    return res.status(500).json({ message: 'Algo de errado não está certo' });
+    return res.status(500).json({ message: ERROR_500 });
   }
 };
 
-module.exports = { getBySales, getBySalesById, createSale };
+const deleteSale = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const product = await salesServices.getBySalesById(id);
+    if (!product[0]) return res.status(404).json({ message: 'Sale not found' });
+    await salesServices.deleteSale(id);
+    return res.status(204).json();
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: ERROR_500 });
+  }
+};
+
+module.exports = { getBySales, getBySalesById, createSale, deleteSale };
