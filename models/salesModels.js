@@ -1,5 +1,4 @@
 const connection = require('./connection');
-
 // let saleId = 2;
 const getBySales = async () => {
   const [products] = await connection.execute(
@@ -12,7 +11,6 @@ const getBySales = async () => {
   );
   return products;
 };
-
 const getBySalesById = async (id) => {
   const [product] = await connection.execute(
     `SELECT 
@@ -26,21 +24,18 @@ const getBySalesById = async (id) => {
   );
   return product;
 };
-
 const createproductSale = async (sales, insertId) => {
-    sales.map((item) =>
-      connection.execute(`
+  sales.map((item) =>
+    connection.execute(
+      `
       INSERT INTO StoreManager.sales_products (sale_id, product_id, quantity) VALUES
     (?, ?, ?);
-    ;`, [
-        insertId,
-        item.productId,
-        item.quantity,
-      ]));
+    ;`,
+      [insertId, item.productId, item.quantity],
+    ));
   const result = { id: insertId, itemsSold: sales };
-    return result;
+  return result;
 };
-
 const createSale = async (sales) => {
   const result = await connection.execute(
     'INSERT INTO StoreManager.sales (date) VALUES (NOW());',
@@ -49,18 +44,21 @@ const createSale = async (sales) => {
 };
 
 const getByProductsById = async (id) => {
-  const [product] = await connection.query(`
-    DELETE FROM StoreManager.sales
-    WHERE id = ?
-  `, [id]);
+  const [product] = await connection.execute(
+    'SELECT * FROM StoreManager.products WHERE id = ?;',
+    [id],
+  );
   return product;
 };
 
 const deleteSale = (id) => {
-  connection.execute(`
+  connection.execute(
+    `
     DELETE FROM StoreManager.sales
     WHERE id = ?
-  `, [id]);
+  `,
+    [id],
+  );
   return { id };
 };
 

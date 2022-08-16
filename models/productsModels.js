@@ -6,8 +6,11 @@ const getByProducts = async () => {
 };
 
 const getByProductsById = async (id) => {
-  const [[product]] = await connection.execute(
-    'SELECT * FROM StoreManager.products WHERE id = ?;',
+  const [product] = await connection.query(
+    `
+    DELETE FROM StoreManager.sales
+    WHERE id = ?
+  `,
     [id],
   );
   return product;

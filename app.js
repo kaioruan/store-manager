@@ -9,15 +9,18 @@ const {
 
 const app = express();
 app.use(express.json());
-
 const PRODUCTS_ID = '/products/:id';
-
 app.get('/products', productsController.getByProducts);
 app.get(PRODUCTS_ID, productsController.getByProductsById);
 app.put(PRODUCTS_ID, nameValidation, productsController.editProduct);
 app.delete(PRODUCTS_ID, productsController.deleteProduct);
 app.post('/products', nameValidation, productsController.createProduct);
-app.post('/sales', saleValidation, quantitySaleValitation, salesControllers.createSale);
+app.post(
+  '/sales',
+  saleValidation,
+  quantitySaleValitation,
+  salesControllers.createSale,
+);
 app.get('/sales', salesControllers.getBySales);
 app.get('/sales/:id', salesControllers.getBySalesById);
 app.delete('/sales/:id', salesControllers.deleteSale);
@@ -26,9 +29,7 @@ app.delete('/sales/:id', salesControllers.deleteSale);
 app.get('/', (_request, response) => {
   response.send();
 });
-
 // não remova essa exportação, é para o avaliador funcionar
-
 // você pode registrar suas rotas normalmente, como o exemplo acima
-// você deve usar o arquivo index.js para executar sua aplicação 
+// você deve usar o arquivo index.js para executar sua aplicação
 module.exports = app;
