@@ -49,11 +49,25 @@ const createSale = async (sales) => {
 };
 
 const getByProductsById = async (id) => {
-  const [product] = await connection.execute(
-    'SELECT * FROM StoreManager.products WHERE id = ?;',
-    [id],
-  );
+  const [product] = await connection.query(`
+    DELETE FROM StoreManager.sales
+    WHERE id = ?
+  `, [id]);
   return product;
 };
 
-module.exports = { getBySales, getBySalesById, createSale, getByProductsById };
+const deleteSale = (id) => {
+  connection.execute(`
+    DELETE FROM StoreManager.sales
+    WHERE id = ?
+  `, [id]);
+  return { id };
+};
+
+module.exports = {
+  getBySales,
+  getBySalesById,
+  createSale,
+  getByProductsById,
+  deleteSale,
+};
