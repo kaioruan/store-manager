@@ -7,7 +7,10 @@ const getByProductsById = async (id) => productsModels.getByProductsById(id);
 const createProduct = async (name) => productsModels.createProduct(name);
 
 const editProduct = async (product) => {
-  const updateProduct = await productsModels.editProduct(product.id, product.name);
+  const updateProduct = await productsModels.editProduct(
+    product.id,
+    product.name,
+  );
   if (!updateProduct) return null;
   return updateProduct;
 };

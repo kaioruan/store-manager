@@ -12,10 +12,17 @@ const deleteSale = async (id) => {
   return removeSale;
 };
 
+const editSale = async (sale, id) => {
+  const updateSale = await salesModels.editSale(sale, id);
+  if (!updateSale) return null;
+  return updateSale;
+};
+
 module.exports = {
   getBySales,
   getBySalesById,
   createSale,
   getByProductsById,
   deleteSale,
+  editSale,
 };
