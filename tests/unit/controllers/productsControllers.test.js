@@ -82,4 +82,24 @@ describe('Busca todos os produtos no BD - Controller', () => {
       expect(res.status.calledWith(200)).to.be.equal(true);
     });
   });
+  describe("Buscando um produto pelo /search", () => {
+    const res = {};
+    const req = { query: { q: 'martelo' } };
+    before(function () {
+      res.status = sinon.stub().returns(res);
+      res.json = sinon.stub().returns();
+      sinon.stub(productsServices, "getBySearch").resolves(productTest);
+    });
+    after(function () {
+      productsServices.getBySearch.restore();
+    });
+    it("O status seja 200 ao encontrar", async () => {
+      await productsController.getBySearch(req, res);
+      expect(res.status.calledWith(200)).to.be.equal(true);
+    });
+    it("O produto foi encontrado", async () => {
+      await productsController.getBySearch(req, res);
+      expect(res.json.calledWith(productTest)).to.be.equal(true);
+    });
+  });
 });
