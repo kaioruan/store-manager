@@ -25,7 +25,7 @@ Neste projeto, fui capaz de:
 
 ⚠ **Atenção:** ⚠
 
-Para rodar a aplicação é necessário executar um dos comandos abaixo.
+Para rodar a aplicação é necessário executar os comandos abaixo.
 
 Instalação de Dependência.
 ```sh
