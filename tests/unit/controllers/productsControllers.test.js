@@ -22,8 +22,7 @@ describe('Busca todos os produtos no BD - Controller', () => {
       productsServices.getByProducts.restore();
     });
     it("O status seja 404", async () => {
-      const result = await productsController.getByProducts(request, response);
-      console.log(result);
+      await productsController.getByProducts(request, response);
       expect(response.status.calledWith(404)).to.be.equal(true);
     });
   });
@@ -33,18 +32,30 @@ describe('Busca todos os produtos no BD - Controller', () => {
       response.json = sinon.stub().returns();
       sinon.stub(productsServices, "getByProducts").rejects();
       sinon.stub(productsServices, "getByProductsById").rejects();
+      sinon.stub(productsServices, "getBySearch").rejects();
+      sinon.stub(productsServices, "deleteProduct").rejects();
     });
     after(function () {
       productsServices.getByProducts.restore();
       productsServices.getByProductsById.restore();
+      productsServices.getBySearch.restore();
+      productsServices.deleteProduct.restore();
     });
     it("O status seja 500 ao procurar todos produtos", async () => {
-      const result = await productsController.getByProducts(request, response);
-      console.log(result);
+      await productsController.getByProducts(request, response);
       expect(response.status.calledWith(500)).to.be.equal(true);
     });
     it("O status seja 500 ao procurar um ID específico", async () => {
       await productsController.getByProductsById(request, response);
+      expect(response.status.calledWith(500)).to.be.equal(true);
+    });
+    it("O status seja 500 ao procurar pelo search", async () => {
+      await productsController.getBySearch(request, response);
+      expect(response.status.calledWith(500)).to.be.equal(true);
+    });
+    it("O status seja 500 ao tentar deletar", async () => {
+      const req = { params: { id: 1}}
+      await productsController.deleteProduct(req, response);
       expect(response.status.calledWith(500)).to.be.equal(true);
     });
   });

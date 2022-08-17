@@ -75,4 +75,16 @@ describe('Buscando produtos no BD - ModelProduct', () => {
       expect(resultCreate).to.include.all.keys("id", "name");
     });
   })
+  describe("Procurando produto pelo search", () => {
+    before(() => {
+      sinon.stub(connection, "execute").resolves(productId);
+    });
+    after(() => {
+      connection.execute.restore();
+    });
+    it("Procurando produto pelo search", async () => {
+      const resultCreate = await productsModel.getBySearch('martelo');
+      expect(resultCreate[0].name).to.be.equal('Martelo de Thor');
+    });
+  });
 })

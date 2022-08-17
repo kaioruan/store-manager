@@ -2,7 +2,6 @@ const { expect } = require("chai");
 const { describe } = require("mocha");
 const sinon = require("sinon");
 
-const connection = require("../../../models/connection");
 const productsModels = require("../../../models/productsModels");
 const productsServices = require('../../../services/productsServices');
 
@@ -91,4 +90,16 @@ describe("Buscando produtos no BD - ProductService", () => {
       expect(resultCreate.name).to.be.equal("Martelo de Odin");
     });
   });
+    describe("Deletando um produto", () => {
+      before(() => {
+        sinon.stub(productsModels, "deleteProduct").resolves(productId);
+      });
+      after(() => {
+        productsModels.deleteProduct.restore();
+      });
+      it("Retorno de deletar um produto", async () => {
+        const resultCreate = await productsServices.deleteProduct(1);
+        expect(resultCreate).to.be.equal(productId);
+      });
+    });
 });

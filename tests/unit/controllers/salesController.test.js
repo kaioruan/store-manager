@@ -111,19 +111,31 @@ describe("Busca todos os produtos no BD - SaleController", () => {
       expect(res.status.calledWith(204)).to.be.equal(true);
     });
   });
-  describe("Erro 500 ao tentar deletar um ID específico", () => {
+  describe("Erro 500 ao tentar deletar, criar e editar sale", () => {
     const res = {};
     const req = { params: { id: 1 } };
     before(function () {
       res.status = sinon.stub().returns(res);
       res.json = sinon.stub().returns();
       sinon.stub(salesServices, "deleteSale").rejects(sale);
+      sinon.stub(salesServices, "editSale").rejects(sale);
+      sinon.stub(salesServices, "createSale").rejects(sale);
     });
     after(function () {
       salesServices.deleteSale.restore();
+      salesServices.editSale.restore();
+      salesServices.createSale.restore();
     });
-    it("O status seja 500 ao encontrar", async () => {
+    it("O status seja 500 ao tentar deletar uma sale", async () => {
       await salesControllers.deleteSale(req, res);
+      expect(res.status.calledWith(500)).to.be.equal(true);
+    });
+    it("O status seja 500 ao tentar editar uma sale", async () => {
+      await salesControllers.editSale(req, res);
+      expect(res.status.calledWith(500)).to.be.equal(true);
+    });
+    it("O status seja 500 ao tentar criar uma sale", async () => {
+      await salesControllers.createSale(req, res);
       expect(res.status.calledWith(500)).to.be.equal(true);
     });
   });
