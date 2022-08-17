@@ -116,4 +116,17 @@ describe("Buscando vendas no BD - SaleService", () => {
       });
     });
   })
+  describe("Atualizando uma venda", () => {
+    before(() => {
+      sinon.stub(salesModels, "editSale").resolves(createProduct);
+    });
+    after(() => {
+      salesModels.editSale.restore();
+    });
+    it("Atualizando uma venda, retornando objeto com ProductId e quantity", async () => {
+      const resultCreate = await salesServices.editSale(createProduct);
+      expect(resultCreate[0]).to.be.a("object");
+      expect(resultCreate[0]).to.include.all.keys("productId", "quantity");
+    });
+  });
 });

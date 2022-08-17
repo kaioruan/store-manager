@@ -92,4 +92,17 @@ describe("Buscando vendas no BD - ModelSale", () => {
       expect(resultCreate).to.include.all.keys("id", "itemsSold");
     });
   });
+  describe("Atualizando uma venda", () => {
+    before(() => {
+      sinon.stub(connection, "execute").resolves(createProduct);
+    });
+    after(() => {
+      connection.execute.restore();
+    });
+    it("Atualizando uma venda, retornando objeto com ProductId e quantity", async () => {
+      const resultCreate = await salesModels.editSale(createProduct);
+      expect(resultCreate[0]).to.be.a("object");
+      expect(resultCreate[0]).to.include.all.keys("productId", "quantity");
+    });
+  });
 });
