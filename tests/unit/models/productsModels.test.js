@@ -20,10 +20,6 @@ describe('Buscando produtos no BD - ModelProduct', () => {
       const search = await productsModel.getByProducts();
       expect(search).to.be.an('array');
     })
-    // it('Retorna um array vazio', async () => {
-    //   const search = await productsModel.getByProducts();
-    //   expect(search).to.be.empty;
-    // });
   })
   describe('Quando existem produtos criados', () => {
     before( function () {
