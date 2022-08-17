@@ -44,8 +44,7 @@ describe('Busca todos os produtos no BD - Controller', () => {
       expect(response.status.calledWith(500)).to.be.equal(true);
     });
     it("O status seja 500 ao procurar um ID específico", async () => {
-      const result = await productsController.getByProductsById(request, response);
-      console.log(result);
+      await productsController.getByProductsById(request, response);
       expect(response.status.calledWith(500)).to.be.equal(true);
     });
   });
@@ -79,8 +78,7 @@ describe('Busca todos os produtos no BD - Controller', () => {
       productsServices.getByProductsById.restore();
     });
     it("O status seja 200 ao encontrar", async () => {
-      const result = await productsController.getByProductsById(req, res);
-      console.log(result);
+      await productsController.getByProductsById(req, res);
       expect(res.status.calledWith(200)).to.be.equal(true);
     });
   });
