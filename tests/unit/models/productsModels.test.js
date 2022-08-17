@@ -7,7 +7,7 @@ const productsModel = require('../../../models/productsModels');
 
 const createProduct = [{ name: "ProdutoX" }];
 const productSearch = [[], []];
-
+const productId = [{ id: 1, name: "Martelo de Thor" }];
 describe('Buscando produtos no BD - ModelProduct', () => {
   describe('Quando não existe produtos cadastrados', () => {
     before(function () {
@@ -52,15 +52,16 @@ describe('Buscando produtos no BD - ModelProduct', () => {
   });
   describe('Procurando Id específico', () => {
     before(() => {
-      sinon.stub(connection, "execute").resolves([1]);
+      sinon.stub(connection, "execute").resolves(productId);
     });
     after(() => {
       connection.execute.restore();
     });
-    // it("Procura um id especifico", async () => {
-    //   const search = await productsModel.getByProductsById([1]);
-    //   expect(search).to.include.all.keys("id", "name");
-    // });
+    it("Procura um id especifico", async () => {
+      const search = await productsModel.getByProductsById(1);
+      expect(search).to.include.all.keys("id", "name");
+      expect(search.name).to.be.equal("Martelo de Thor");
+    });
   })
   describe('Criação de produto', () => {
     before(() => {
@@ -71,7 +72,6 @@ describe('Buscando produtos no BD - ModelProduct', () => {
     });
     it('Criando um produto', async () => {
       const resultCreate = await productsModel.createProduct(createProduct);
-      // expect(resultCreate).to.be.a("object");
       expect(resultCreate).to.include.all.keys("id", "name");
     });
   })

@@ -103,5 +103,17 @@ describe("Buscando vendas no BD - SaleService", () => {
       expect(resultCreate[0]).to.be.a("object");
       expect(resultCreate[0]).to.include.all.keys("productId", "quantity");
     });
-  });
+    describe("Deletando uma venda", () => {
+      before(() => {
+        sinon.stub(salesModels, "deleteSale").resolves(saleSearch);
+      });
+      after(() => {
+        salesModels.deleteSale.restore();
+      });
+      it("Retorno de deletar uma venda", async () => {
+        const resultCreate = await salesServices.deleteSale(1);
+        expect(resultCreate[0].saleId).to.be.equal(1);
+      });
+    });
+  })
 });

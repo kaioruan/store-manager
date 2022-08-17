@@ -8,12 +8,10 @@ const getByProducts = async () => {
 };
 
 const getByProductsById = async (id) => {
-  console.log(id);
   const [[product]] = await connection.query(
     'SELECT * FROM StoreManager.products WHERE id = ?;',
     [id],
   );
-  console.log(product);
   return product;
 };
 

@@ -8,7 +8,7 @@ const productsServices = require('../../../services/productsServices');
 
 const createProduct = [{ name: "ProdutoX" }];
 const productSearch = [[], []];
-// const productId = [{ id: 1, name: "Martelo de Thor" }];
+const productId = [{ id: 1, name: "Martelo de Thor" }];
 
 describe("Buscando produtos no BD - ProductService", () => {
   describe("Quando não existe produtos cadastrados", () => {
@@ -52,18 +52,18 @@ describe("Buscando produtos no BD - ProductService", () => {
       expect(search[0]).to.include.all.keys("id", "name");
     });
   });
-  // describe("Procurando Id específico", () => {
-  //   before(() => {
-  //     sinon.stub(productsModels, "getByProductsById").resolves(1);
-  //   });
-  //   after(() => {
-  //     productsModels.getByProductsById.restore();
-  //   });
-  //   it("Procura um id especifico", async () => {
-  //     const search = await productsServices.getByProductsById(1);
-  //     expect(search).to.include.all.keys("id", "name");
-  //   });
-  // });
+  describe("Procurando Id específico", () => {
+    before(() => {
+      sinon.stub(productsModels, "getByProductsById").resolves(productId);
+    });
+    after(() => {
+      productsModels.getByProductsById.restore();
+    });
+    it("Procura um id especifico", async () => {
+      const search = await productsServices.getByProductsById(1);
+      expect(search[0]).to.include.all.keys("id", "name");
+    });
+  });
   describe("Criação de produto", () => {
     before(() => {
       sinon.stub(productsModels, "createProduct").resolves(createProduct);
@@ -74,6 +74,21 @@ describe("Buscando produtos no BD - ProductService", () => {
     it("Criando um produto", async () => {
       const resultCreate = await productsServices.createProduct(createProduct);
       expect(resultCreate[0]).to.include.all.keys("name");
+    });
+  });
+  describe("Editando produto", () => {
+    before(() => {
+      sinon.stub(productsModels, "editProduct").resolves({ id: 1, name: 'Martelo de Odin'});
+    });
+    after(() => {
+      productsModels.editProduct.restore();
+    });
+    it("Editando um produto", async () => {
+      const resultCreate = await productsServices.editProduct({
+        id: 1,
+        name: "Martelo de Odin",
+      });
+      expect(resultCreate.name).to.be.equal("Martelo de Odin");
     });
   });
 });

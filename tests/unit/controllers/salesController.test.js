@@ -10,6 +10,7 @@ const productTest = [
     name: "Martelo de Thor",
   },
 ];
+
 const response = {};
 const request = {};
 
@@ -41,12 +42,10 @@ describe("Busca todos os produtos no BD - SaleController", () => {
     });
     it("O status seja 500", async () => {
       const result = await salesControllers.getBySales(request, response);
-      console.log(result);
       expect(response.status.calledWith(500)).to.be.equal(true);
     });
     it("O status seja 500 ao procurar um ID específico", async () => {
       const result = await salesControllers.getBySalesById(request, response);
-      console.log(result);
       expect(response.status.calledWith(500)).to.be.equal(true);
     });
   });
@@ -81,8 +80,24 @@ describe("Busca todos os produtos no BD - SaleController", () => {
     });
     it("O status seja 200 ao encontrar", async () => {
       const result = await salesControllers.getBySalesById(req, res);
-      console.log(result);
       expect(res.status.calledWith(200)).to.be.equal(true);
     });
   });
+  // describe("Deletando um ID específico", () => {
+  //   const res = {};
+  //   const req = { params: { id: 1 } };
+  //   before(function () {
+  //     res.status = sinon.stub().returns(res);
+  //     res.json = sinon.stub().returns();
+  //     sinon.stub(salesServices, "deleteSale").resolves(1);
+  //   });
+  //   after(function () {
+  //     salesServices.deleteSale.restore();
+  //   });
+  //   it("O status seja 204 ao encontrar", async () => {
+  //     const result = await salesControllers.deleteSale(req, res);
+  //     console.log(result);
+  //     expect(res.status.calledWith(404)).to.be.equal(true);
+  //   });
+  // });
 });
