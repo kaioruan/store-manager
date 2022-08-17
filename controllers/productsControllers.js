@@ -18,7 +18,6 @@ const getByProductsById = async (req, res) => {
   try {
     const { id } = req.params;
     const product = await productsServices.getByProductsById(id);
-    console.log(product);
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
@@ -67,10 +66,26 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const getBySearch = async (req, res) => {
+  try {
+    const { q } = req.query;
+    if (!q) {
+      const allProducts = await productsServices.getByProducts();
+      return res.status(200).json(allProducts);
+    }
+    const searchName = await productsServices.getBySearch(q);
+    return res.status(200).json(searchName);
+  } catch (error) {
+      console.log(error);
+      return res.status(500).json({ message: ERROR_500 });
+  }
+};
+
 module.exports = {
   getByProducts,
   getByProductsById,
   createProduct,
   editProduct,
   deleteProduct,
+  getBySearch,
 };
