@@ -11,6 +11,7 @@ const app = express();
 app.use(express.json());
 const PRODUCTS_ID = '/products/:id';
 app.get('/products', productsController.getByProducts);
+app.get('/products/search', productsController.getBySearch);
 app.get(PRODUCTS_ID, productsController.getByProductsById);
 app.put(PRODUCTS_ID, nameValidation, productsController.editProduct);
 app.delete(PRODUCTS_ID, productsController.deleteProduct);
