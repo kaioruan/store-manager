@@ -4,6 +4,8 @@ const getByProducts = async () => productsModels.getByProducts();
 
 const getByProductsById = async (id) => productsModels.getByProductsById(id);
 
+const getBySearch = async (q) => productsModels.getBySearch(q);
+
 const createProduct = async (name) => productsModels.createProduct(name);
 
 const editProduct = async (product) => {
@@ -27,4 +29,5 @@ module.exports = {
   createProduct,
   editProduct,
   deleteProduct,
+  getBySearch,
 };
