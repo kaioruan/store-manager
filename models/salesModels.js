@@ -73,7 +73,6 @@ const editSale = async (sale, id) => {
     ;`,
       [item.quantity, id, item.productId],
     ));
-// }
   console.log(sale);
   return sale;
 };

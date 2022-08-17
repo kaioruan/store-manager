@@ -15,6 +15,7 @@ const deleteSale = async (id) => {
 const editSale = async (sale, id) => {
   const updateSale = await salesModels.editSale(sale, id);
   if (!updateSale) return null;
+  console.log(updateSale);
   return updateSale;
 };
 
