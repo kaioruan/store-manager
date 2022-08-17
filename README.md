@@ -35,12 +35,23 @@ Modo de desenvolvimento:
 ```sh
 npm run debug
 ```
+Resetar banco de dados:
+```sh
+npm run seed
+```
 ---
+
+# Sobre os testes
+## Executando todos os testes
+
+Para poder executar os testes, inicie sua aplicação com o comando `npm test:mocha` e **todos** os seus testes serão executados.
+
+
 # Requisitos desenvolvidos no projeto:
 ### Requisitos Obrigatórios:
 
-- ✅ 1. Crie endpoints para listar produtos. O endpoint para listar produtos deve ser acessível através do caminho ( /products) e ( /products/:id);
-- ✅ 2. Crie endpoint para cadastrar produtos: O endpoint deve ser acessível através do caminho ( /products);
+- ✅ 1. Crie endpoints para listar produtos. O endpoint para listar produtos deve ser acessível através do caminho '/products' e '/products/:id';
+- ✅ 2. Crie endpoint para cadastrar produtos: O endpoint deve ser acessível através do caminho '/products';
 - ✅ 3. Crie validações para produtos.
 - ✅ 4. Crie endpoint para validar e cadastrar vendas.
 - ✅ 5. Crie endpoints para listar vendas.
