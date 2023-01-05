@@ -5,6 +5,8 @@ Esse projeto foi desenvolvido durante o módulo de BackEnd na Trybe! #vqv 🚀
 Aqui você vai encontrar os detalhes de como foi o desenvolvimento do projeto e quais foram os requisitos obrigatórios para o desenvolvimento.
 
 ---
+# Descrição:
+Aplicação backend em formato de dropshipping, onde é possivel, criar, visualizar, deletar e atualizar produtos e vendas.
 
 # Habilidades desenvolvidas
 
